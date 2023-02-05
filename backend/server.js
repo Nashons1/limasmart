@@ -9,6 +9,10 @@ const cloudinary = require('cloudinary').v2;
 const MONGO_URI = process.env.MONGO_URI;
 const Products= require('./model/products');
 const cors = require('cors');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const User = require("./model/userModel");
+
 const products = require('./model/products');
 
 
@@ -124,3 +128,80 @@ const{ product_name,price,product_description,available_stock,days_left,investor
     });
   
   })
+
+  app.post("/register", (request, response) =>{
+
+    //hash the password before saving the data
+    bcrypt.hash(request.body.password, 10)
+    .then((hashedPassword) => {
+        const user = new User({
+            email: request.body.email,
+            password: hashedPassword,
+        });
+        user.save().then((result) => {
+            response.status(201).send({
+              message: "User Created Successfully",
+              result,
+            });
+          })
+          .catch((error) => {
+            response.status(500).send({
+              message: "Error creating user",
+              error,
+            });
+          });
+    })
+    .catch((e) => {
+        response.status(500).send({
+            message: "password hash not succesfull",
+            e,
+        });
+    });
+});
+
+app.post("/login", (request, response) => {
+    //check if the email that the useer enters exists
+    User.findOne({email: request.body.email })
+    .then((user)=>{
+        bcrypt.compare(request.body.password, user.password)
+        .then((passwordCheck) => {
+            //check if password matches
+
+            if(!passwordCheck){
+                return response.status(400).send({
+                    message: "passwords not matching",
+                    error,
+                });
+            }
+
+            //create JWT token
+            const token = jwt.sign(
+                {
+                    userId: user._id,
+                    userEmail: user.email,
+                },
+                "RANDOM-TOKEN",
+                { expiresIn: "24h"}
+            );
+
+            //return success response
+            response.status(200).send({
+                message: "Login successful",
+                email: user.email,
+                token,
+            });
+        })
+        .catch((error) => {
+          response.status(400).send({
+            message: "Password does not match",
+            error,
+          });
+        })
+      })  
+     .catch((e) => {
+        response.status(404).send({
+            message: "Email not found",
+            e,
+          });
+    })
+})
