@@ -7,8 +7,9 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cloudinary = require('cloudinary').v2;
 const MONGO_URI = process.env.MONGO_URI;
-const Business= require('./model/business');
+const Products= require('./model/products');
 const cors = require('cors');
+const products = require('./model/products');
 
 
 
@@ -66,10 +67,10 @@ const handleErrors=(err)=>{
 //Getting Businesses already Registered ...
 app.get('/',async(req,res)=>{
    try{
-    const businesses = await Business.find({}).then((res)=>{
+    const products = await Products.find({}).then((res)=>{
         return res
     })
-    return res.status(201).json({businesses})
+    return res.status(201).json({products})
     // console.log(businesses)
    }catch(error){
     console.log(error)
@@ -81,7 +82,7 @@ app.get('/',async(req,res)=>{
 
 //image upload API
 app.post("/enroll", async (request, response) => {
-const{ company_name,tag_line,target,valuation,days_left,investors,background_image,raised_amount,min_invest}= request.body;
+const{ product_name,price,product_description,available_stock,days_left,investors,product_image,raised_amount,min_invest}= request.body;
 
     //collect the image from the user
     // const data = {
@@ -98,17 +99,17 @@ const{ company_name,tag_line,target,valuation,days_left,investors,background_ima
        const  background_image = await result.secure_url; 
        console.log("found bg url")
         const business = await Business.create({company_name,
-            tag_line,
-            target,
-            valuation,
+            price,
+            product_description,
+            available_stock,
             days_left,
             investors,
-            background_image,
-            background_image,
+            product_image,
+            //background_image,
             raised_amount,
             min_invest})
 
-        console.log(business)
+        console.log(products)
          return res.status(201).json({business})
     //   response.status(200).send({
     //     message: "success",

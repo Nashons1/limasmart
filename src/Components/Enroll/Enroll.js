@@ -7,13 +7,13 @@ import { Link, useNavigate } from 'react-router-dom';
 function Enroll() {
     const navigate = useNavigate()
     const [error,setError] = useState('');
-    const [company_name,setCompany_name] = useState('');
-    const [tag_line,setTag_line] = useState('');
-    const [target,setTarget] = useState('');
-    const [valuation,setValuation] = useState('');
+    const [product_name,setProduct_name] = useState('');
+    const [price,setPrice] = useState('');
+    const [product_description,setProduct_description] = useState('');
+    const [available_stock,setAvailable_stock] = useState('');
     const [days_left,setDays_left] = useState('');
     const [investors,setInvestors] = useState('');
-    const [background_image,setBackground_image] = useState('');
+    const [product_image,setProduct_image] = useState('');
     const [profile_image,setProfile_image] = useState('');
     const [raised_amount,setRaised_amount] = useState('');
     const [min_invest,setMin_invest] = useState('');
@@ -21,13 +21,13 @@ function Enroll() {
 
 const onHandleSubmit =async(e)=>{
     e.preventDefault('');
-    setCompany_name('');
-    setTag_line('')
-    setTarget('')
-    setValuation('')
+    setProduct_name('');
+    setPrice('')
+    setProduct_description('')
+    setAvailable_stock('')
     setDays_left('')
     setInvestors('')
-    setBackground_image('')
+    setProduct_image('')
     setProfile_image('')
     setRaised_amount('')
     setMin_invest('')
@@ -40,12 +40,12 @@ const response = await fetch('http://localhost:3001/enroll',{
       'Content-Type':'application/json'
     },
     body:JSON.stringify({
-        company_name,tag_line,target,valuation,days_left,investors,background_image,profile_image,raised_amount,min_invest
+        product_name,price,product_description,available_stock,product_image
     }),
    });
 if(response.status == 201){
-    const {business} = await response.json();
-    await setError(`Congratulations ${business.company_name} , you have successfully signed in`)
+    const {product} = await response.json();
+    await setError(`Congratulations ${product.product_name} , you have successfully added a product`)
     navigate('/')
 }else if(response.status == 400){
    const {errors} = await response.json();
@@ -58,20 +58,20 @@ if(response.status == 201){
    
 
 
-const onCompanyName =(e)=>{
-        setCompany_name(e.target.value);
+const onProductName =(e)=>{
+        setProduct_name(e.target.value);
     }
 const onChangeTarget =(e)=>{
-        setTarget(e.target.value);
+        setProduct_description(e.target.value);
     }
 const onChangeTagLine =(e)=>{
-        setTag_line(e.target.value);
+        setPrice(e.target.value);
     }  
 const onChangeValuation =(e)=>{
-   setValuation(e.target.value);
+   setAvailable_stock(e.target.value);
 }  
 const onCompanyNmae =(e)=>{
-    setCompany_name(e.target.value);
+    setProduct_name(e.target.value);
 }
 const onChangeSetDaysLeft =(e)=>{
     setDays_left(e.target.value);
@@ -80,7 +80,7 @@ const onChangeInvestors =(e)=>{
     setInvestors(e.target.value);
 }    
 const onChangeBackgroundImage =(e)=>{
-    setBackground_image(e.target.value);
+    setProduct_image(e.target.value);
 }
 const onChangeProfileImage =(e)=>{
     setProfile_image(e.target.value);
@@ -101,19 +101,19 @@ const onChangeMinInvest =(e)=>{
 <form onSubmit={onHandleSubmit} className='form'>
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Product Name :</label>
-    <input className='input' type='text'  required name="company_name" value={company_name} onChange={onCompanyName} />
+    <input className='input' type='text'  required name="product_name" value={product_name} onChange={onProductName} />
     </div>
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Price :</label>
-    <input className='input' type='number' required name="target"  value={target}  onChange={onChangeTarget} />
+    <input className='input' type='number' required name="price"  value={product_description}  onChange={onChangeTarget} />
     </div>
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Product Description :</label>
-    <input className='input' type="text" name='tag_line' required  value={tag_line} onChange={onChangeTagLine} />
+    <input className='input' type="text" name='product_description' required  value={price} onChange={onChangeTagLine} />
     </div>
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Available Stock :</label>
-    <input className='input' type="number" name='valuation' required  value={valuation} onChange={onChangeValuation} />
+    <input className='input' type="number" name='available_stock' required  value={available_stock} onChange={onChangeValuation} />
     </div>
     {/* <div className='input-div flex place-content-between'>
     <label className='form-label'>Days Left :</label>
@@ -125,7 +125,7 @@ const onChangeMinInvest =(e)=>{
     </div> */}
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Product Image :</label>
-    <input className='input' type="text" name='background_image' required  value={background_image} onChange={onChangeBackgroundImage} />
+    <input className='input' type="file" name='product_image' required  value={product_image} onChange={onChangeBackgroundImage} />
     </div>
     {/* <div className='input-div flex place-content-between'>
     <label className='form-label'>Profile Image :</label>
