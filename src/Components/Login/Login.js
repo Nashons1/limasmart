@@ -78,7 +78,7 @@ const Login = ({ setUserState }) => {
           Login
         </button>
       </form>
-      <NavLink to="/signup">Not yet registered? Register Now</NavLink>
+      <NavLink to="/register">Not yet registered? Register Now</NavLink>
     </div>
   );
 };
