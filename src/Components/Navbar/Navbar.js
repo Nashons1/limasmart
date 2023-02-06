@@ -15,6 +15,8 @@ function NavbarComponent() {
           <Nav className="justify-content-end text-black text-lg flex items-center" >
             {/* <Nav.Link href="#home">Invest</Nav.Link> */}
             <Link to="/enroll"> <button style={{backgroundColor:"#5EBCB6"}} className=' px-2 md:px-4 py-1 rounded'><p className='text-base text-slate-600'>List Product</p></button></Link>
+            <Link to="/login"> <button className=' px-2 md:px-4 py-1 rounded'><p className='text-base text-slate-600'>Login</p></button></Link>
+            <Link to="/register"> <button style={{backgroundColor:"#5EBCB6"}} className=' px-2 md:px-4 py-1 rounded'><p className='text-base text-slate-600'>Register</p></button></Link>
           </Nav>
         </Container>
       </Navbar>
