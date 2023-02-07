@@ -39,7 +39,7 @@ function Tile({data}) {
 <div style={{borderLeft:'1px solid #000',height:'40px'}} className='grid self-center mr-1'></div>
 
 <div className='px-2 py-1'>
-<p className='font-bold text-lg md:text-xl okay-bold'>${data.target}</p>
+<p className='font-bold text-lg md:text-xl okay-bold'>{data.target}</p>
 <p>Bids</p>
 </div>
 <div style={{borderLeft:'1px solid #000',height:'40px'}} className='grid self-center mr-1'></div>
@@ -51,10 +51,10 @@ function Tile({data}) {
       </div>
 
  <div className='second-second'>
-  <ProgressBar now={60} />
+  {/* <ProgressBar now={60} /> */}
   <div className='progress-bar-div flex justify-between text-sm text-slate-600'>
-    <div>${data.raised_amount} amount used</div>
-    <div>{data.days_left}products left</div>
+    {/* <div>${data.raised_amount} amount used</div> */}
+    <div>{data.days_left} products left</div>
   </div>
 </div>
     </div>   
@@ -68,7 +68,7 @@ function Tile({data}) {
      </div>
     </div>
 
-     <div className='investors flex text-slate-600'><FaUserPlus className='flex self-center' /><p className='ml-2'>{data.investors} Supports</p></div>
+     {/* <div className='investors flex text-slate-600'><FaUserPlus className='flex self-center' /><p className='ml-2'>{data.investors} Supports</p></div> */}
      </div>
 
    

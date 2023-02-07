@@ -84,50 +84,75 @@ app.get('/',async(req,res)=>{
   
 })
 
+// //image upload API
+// app.post("/enroll", async (request, response) => {
+// const{ product_name,price,product_description,available_stock,days_left,investors,product_image,raised_amount,min_invest}= request.body;
+
+//     //collect the image from the user
+//     // const data = {
+//     //   image: request.body.image
+//     // };
+  
+//     //upload the image to cloudinary
+//     // cloudinary.uploader.upload(profile_image);
+//     await cloudinary.uploader.upload(background_image)
+//     // console.log("uploaded")
+
+//     .then(async (result) => {
+
+//        const  background_image = await result.secure_url; 
+//        console.log("found bg url")
+//         const business = await Business.create({company_name,
+//             price,
+//             product_description,
+//             available_stock,
+//             days_left,
+//             investors,
+//             product_image,
+//             //background_image,
+//             raised_amount,
+//             min_invest})
+
+//         console.log(products)
+//          return res.status(201).json({business})
+//     //   response.status(200).send({
+//     //     message: "success",
+//     //     result,
+//     //   });
+//     }) 
+//     .catch((error) => {
+//       response.status(500).send({
+//         message: "failure",
+//         error,
+//       });
+//     });
+  
+//   })
+
 //image upload API
-app.post("/enroll", async (request, response) => {
-const{ product_name,price,product_description,available_stock,days_left,investors,product_image,raised_amount,min_invest}= request.body;
+app.post("/upload-image", (request, response) => {
 
-    //collect the image from the user
-    // const data = {
-    //   image: request.body.image
-    // };
-  
-    //upload the image to cloudinary
-    // cloudinary.uploader.upload(profile_image);
-    await cloudinary.uploader.upload(background_image)
-    // console.log("uploaded")
+  //collect the image from the user
+  const data = {
+    image: request.body.file
+  };
 
-    .then(async (result) => {
-
-       const  background_image = await result.secure_url; 
-       console.log("found bg url")
-        const business = await Business.create({company_name,
-            price,
-            product_description,
-            available_stock,
-            days_left,
-            investors,
-            product_image,
-            //background_image,
-            raised_amount,
-            min_invest})
-
-        console.log(products)
-         return res.status(201).json({business})
-    //   response.status(200).send({
-    //     message: "success",
-    //     result,
-    //   });
-    }) 
-    .catch((error) => {
-      response.status(500).send({
-        message: "failure",
-        error,
-      });
+  //upload the image to cloudinary
+  cloudinary.uploader.upload(data.image)
+  .then((image) => {
+    response.status(200).send({
+      // message: "success",
+      image,
     });
-  
-  })
+  }) 
+  .catch((error) => {
+    response.status(500).send({
+      message: "failure",
+      error,
+    });
+  });
+
+})
 
   app.post("/register", (request, response) =>{
 
