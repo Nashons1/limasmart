@@ -24,43 +24,43 @@ function Enroll() {
     const [imageurl, setImageurl] = useState('');
 
 
-// const onHandleSubmit =async(e)=>{
-//     e.preventDefault('');
-//     setProduct_name('');
-//     setPrice('')
-//     setProduct_description('')
-//     setAvailable_stock('')
-//     setDays_left('')
-//     setInvestors('')
-//     setProduct_image('')
-//     setProfile_image('')
-//     setRaised_amount('')
-//     setMin_invest('')
-    // setImageurl('')
+const onHandleSubmit =async(e)=>{
+    e.preventDefault('');
+    setProduct_name('');
+    setPrice('')
+    setProduct_description('')
+    setAvailable_stock('')
+    setDays_left('')
+    setInvestors('')
+    setProduct_image('')
+    setProfile_image('')
+    setRaised_amount('')
+    setMin_invest('')
+    setImageurl('')
  
 
-   //Register Business...
-// const response = await fetch('http://localhost:3001/enroll',{
-//     method:'POST',
-//     headers:{
-//       'Content-Type':'application/json'
-//     },
-//     body:JSON.stringify({
-//         product_name,price,product_description,available_stock,product_image
-//     }),
-//    });
-// if(response.status == 201){
-//     const {product} = await response.json();
-//     await setError(`Congratulations ${product.product_name} , you have successfully added a product`)
-//     navigate('/')
-// }else if(response.status == 400){
-//    const {errors} = await response.json();
+//    Register Business...
+const response = await fetch('http://localhost:3001/enroll',{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({
+        product_name,price,product_description,available_stock,product_image
+    }),
+   });
+if(response.status == 201){
+    const {product} = await response.json();
+    await setError(`Congratulations ${product.product_name} , you have successfully added a product`)
+    navigate('/')
+}else if(response.status == 400){
+   const {errors} = await response.json();
    
-//         setError(errors)
+        setError(errors)
       
-// }
+}
 
-    // }
+    }
 
     //This function uploads the  image to cloudinary
     async function OnChangeFile() {
@@ -129,44 +129,44 @@ const onChangeMinInvest =(e)=>{
 
 
 
-async function listProduct() {
-    const ethers = require("ethers");
+// async function listProduct() {
+//     const ethers = require("ethers");
 
     
-    try {
+//     try {
 
-        await OnChangeFile()
-         console.log("uploaded")
-        //After adding your Hardhat network to your metamask, this code will get providers and signers
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
+//         await OnChangeFile()
+//          console.log("uploaded")
+//         //After adding your Hardhat network to your metamask, this code will get providers and signers
+//         const provider = new ethers.providers.Web3Provider(window.ethereum);
+//         const signer = provider.getSigner();
 
-        //Pull the deployed contract instance
-        let contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer)
+//         //Pull the deployed contract instance
+//         let contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer)
 
-        //massage the params to be sent to the contract
-        // const price = ethers.utils.parseUnits(formParams.price, 'ether')
+//         //massage the params to be sent to the contract
+//         // const price = ethers.utils.parseUnits(formParams.price, 'ether')
         
 
-        //actually list the product
-        let transaction = await contract.listProduct(product_name, product_description, available_stock, imageurl, price)
-        await transaction.wait()
+//         //actually list the product
+//         let transaction = await contract.listProduct(product_name, product_description, available_stock, imageurl, price)
+//         await transaction.wait()
 
-        alert("Successfully listed your Product!");
+//         alert("Successfully listed your Product!");
        
-        window.location.replace("/")
-    }
-    catch(e) {
-        alert( "Upload error"+e )
-    }
-}
+//         window.location.replace("/")
+//     }
+//     catch(e) {
+//         alert( "Upload error"+e )
+//     }
+// }
   return (
     <div>
             <div className='form-container  flex items-center relative'>
     <div className='form-div '>
     <div><LocationCityIcon style={{fontSize: "xxx-large", color:"#5EBCB6"}}/></div>
 <p className='text-3xl '>List your Product</p>
-<form onSubmit={listProduct} className='form'>
+<form onSubmit={onHandleSubmit} className='form'>
     <div className='input-div flex place-content-between'>
     <label className='form-label'>Product Name :</label>
     <input className='input' type='text'  required name="product_name" value={product_name} onChange={onProductName} />
